@@ -1,47 +1,770 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Site Libre</title>
-    <style>
-        body {
-            background-color: #1a237e; /* Fond bleu nuit profond */
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+<!-- ════════════════════════════════════════════════════════════════════════
+     EsKal Numérique — site vitrine (fichier unique, aucune dépendance locale)
+     ──────────────────────────────────────────────────────────────────────────
+     ▶ POUR METTRE LE VRAI NUMÉRO DE TÉLÉPHONE :
+       recherche « 07 XX XX XX XX » — la recherche en trouve 4, dont une
+       dans ce commentaire. Les 3 vrais endroits sont :
+         1) le bouton d'appel du bandeau d'accueil (en haut de page)
+         2) le grand bouton d'appel de la section Contact
+         3) le pied de page
+       Modifie aussi les liens href="tel:+337XXXXXXXX" (au même endroit
+       que chaque numéro affiché).
+       Format international : 07 61 23 45 67  →  tel:+33761234567
+      ▶ ajoute le logo SAP et autres trucs importants quand tu auras la valid Nova
 
-        /* Ton cadre arrondi fluide */
-        .cadre-arrondi {
-            background-color: #6C7E89; /* Ton gris ardoise éclairci (RGB 108, 126, 137) */
-            border-radius: 20px;       /* Des bords bien arrondis et doux */
-            padding: 30px;
-            max-width: 600px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
+     ════════════════════════════════════════════════════════════════════════ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EsKal Numérique — Aide à l’autonomie numérique à domicile · Bergerac</title>
+<meta name="description" content="Kal vous apprend à utiliser votre ordinateur, votre tablette, votre smartphone et Internet, simplement, chez vous et à votre rythme. Séances à domicile sur Bergerac et communes proches. Premier bilan gratuit.">
+<meta property="og:title" content="EsKal Numérique — Reprenez la main sur vos outils numériques">
+<meta property="og:description" content="Accompagnement informatique à domicile, à votre rythme, sans stress ni jargon. Secteur de Bergerac. Premier bilan gratuit.">
+<meta property="og:type" content="website">
+<link rel="icon" href="EKN_Logo.png" type="image/png">
+<!-- Police du flyer : Noto Sans (secours : Segoe UI, polices système) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
-        h1 {
-            color: #e0f7fa; /* Bleu très clair lumineux */
-            margin-top: 0;
-        }
+<style>
+/* ─── Palette issue du logo (éclaircie pour la lisibilité) ───
+   navy   #144669  → titres, textes forts
+   teal   #016f97  → accents, liens
+   slate  #2f5169  → bandeau pied de page (comme le flyer)
+   jaune  #f0e038  → touches de surlignage                    */
+:root{
+  --navy:#144669;
+  --navy-dark:#0e3450;
+  --teal:#016f97;
+  --teal-dark:#015a79;
+  --slate:#2f5169;
+  --jaune:#f0e038;
+  --texte:#28323d;
+  --fond-clair:#f2f7fa;
+  --fond-carte:#ffffff;
+  --bord:#d7e3ec;
+  --ombre:0 6px 18px rgba(20,70,105,.10);
+}
 
-        p {
-            color: #e0f7fa; /* Texte en bleu clair pour une lisibilité parfaite */
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-    </style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* ▼ DÉCALAGE POUR NAVIGATEUR (Évite le chevauchement sous le menu fixe) ▼ */
+section[id] {
+  scroll-margin-top: 42px;
+}
+/* ▲ DÉCALAGE POUR NAVIGATEUR ▲ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+
+body{
+  font-family:"Noto Sans","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font-size:18px;
+  line-height:1.65;
+  color:var(--texte);
+  background:#ffffff;
+  -webkit-text-size-adjust:100%;
+}
+
+/* Ligne d'entête tricolore (navy / teal / jaune) */
+body::before{
+  content:"";display:block;height:7px;
+  background:linear-gradient(to right,var(--navy) 0 42%,var(--teal) 42% 76%,var(--jaune) 76% 100%);
+}
+
+img{max-width:100%;height:auto}
+a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--teal-dark)}
+:focus-visible{outline:4px solid var(--jaune);outline-offset:2px;border-radius:4px}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+.skip{
+  position:absolute;left:-9999px;top:0;background:var(--navy);color:#fff;
+  padding:12px 20px;border-radius:0 0 10px 0;z-index:100;font-weight:700;
+}
+.skip:focus{left:0}
+
+/* ══════════ EN-TÊTE ══════════ */
+header.site{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--bord);
+  box-shadow:0 2px 10px rgba(20,70,105,.06);
+}
+.header-inner{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:12px 0;
+}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.brand img{width:150px;flex:0 0 auto}
+.brand .titre{line-height:1.25}
+.brand .titre strong{display:block;font-size:1.15rem;font-weight:800;color:var(--navy)}
+.brand .titre span{font-size:.9rem;color:var(--teal);font-weight:600}
+
+nav.principale{
+  margin-left:auto;
+  display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+}
+nav.principale a{
+  color:var(--navy);font-weight:600;font-size:1rem;
+  text-decoration:none;padding:10px 13px;border-radius:10px;
+}
+nav.principale a:hover{background:var(--fond-clair);color:var(--teal-dark)}
+
+/* ══════════ BOUTONS ══════════ */
+.bouton{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;padding:12px 26px;border-radius:14px;
+  font-weight:700;font-size:1.1rem;text-decoration:none;
+  transition:background .2s,color .2s,transform .1s;
+}
+.bouton svg{flex:0 0 auto}
+.bouton:hover{transform:translateY(-1px)}
+.bouton-plein{background:var(--navy);color:#fff}
+.bouton-plein:hover{background:var(--teal);color:#fff}
+.bouton-blanc{background:#fff;color:var(--navy);box-shadow:var(--ombre)}
+.bouton-blanc:hover{background:var(--jaune);color:var(--navy)}
+.bouton-contour{border:3px solid var(--navy);color:var(--navy);background:transparent}
+.bouton-contour:hover{background:var(--navy);color:#fff}
+
+/* ══════════ BANDEAU D'ACCUEIL ══════════ */
+.hero{background:linear-gradient(180deg,#ffffff 0%,var(--fond-clair) 100%);padding:56px 0 64px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:44px;align-items:center}
+.surtitre{
+  display:inline-block;font-size:.95rem;font-weight:700;letter-spacing:.04em;
+  color:var(--teal);text-transform:uppercase;margin-bottom:14px;
+}
+h1{
+  font-size:clamp(1.85rem,1.2rem + 2.8vw,2.9rem);
+  line-height:1.22;color:var(--navy);font-weight:800;margin-bottom:20px;
+}
+mark{
+  background:linear-gradient(to top,rgba(240,224,56,.75) 36%,transparent 36%);
+  color:inherit;padding:0 3px;
+}
+.hero .accroche{font-size:1.15rem;max-width:56ch;margin-bottom:28px}
+.hero .accroche strong{color:var(--navy)}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.hero-note{font-size:1.02rem;color:var(--teal-dark);font-weight:600;display:flex;align-items:center;gap:8px}
+.hero-note svg{color:var(--jaune);flex:0 0 auto}
+
+/* Carte « en un coup d'œil » */
+.coup-oeil{
+  background:var(--fond-carte);border:1px solid var(--bord);border-radius:20px;
+  box-shadow:var(--ombre);padding:30px 30px 26px;
+}
+.coup-oeil h2{font-size:1.2rem;color:var(--navy);margin-bottom:16px}
+.coup-oeil ul{list-style:none}
+.coup-oeil li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px dashed var(--bord);
+  font-size:1.02rem;
+}
+.coup-oeil li:last-child{border-bottom:none}
+.coup-oeil li svg{color:var(--teal);flex:0 0 auto;margin-top:4px}
+
+/* ══════════ SECTIONS ══════════ */
+section{padding:72px 0}
+section.fond{background:var(--fond-clair)}
+.section-titre{text-align:center;max-width:760px;margin:0 auto 48px}
+.section-titre h2{
+  font-size:clamp(1.55rem,1.2rem + 1.6vw,2.2rem);
+  color:var(--navy);font-weight:800;line-height:1.28;
+}
+.section-titre .barre{
+  width:64px;height:6px;border-radius:3px;background:var(--jaune);
+  margin:16px auto 18px;
+}
+.section-titre p{font-size:1.08rem}
+
+/* Approche */
+.approche-intro{max-width:780px;margin:0 auto 40px;font-size:1.12rem;text-align:center}
+.approche-intro strong{color:var(--navy)}
+.grille-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
+.carte{
+  background:var(--fond-carte);border:1px solid var(--bord);border-radius:18px;
+  padding:30px 26px;box-shadow:var(--ombre);
+}
+.carte .icone{
+  width:60px;height:60px;border-radius:16px;
+  background:#e3f0f7;color:var(--teal);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.carte h3{font-size:1.22rem;color:var(--navy);margin-bottom:10px}
+.carte p{font-size:1.02rem}
+
+/* Services */
+.grille-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
+.service{
+  background:var(--fond-carte);border:1px solid var(--bord);border-radius:18px;
+  padding:28px 26px;box-shadow:var(--ombre);display:flex;flex-direction:column;
+}
+.service .icone{
+  width:64px;height:64px;border-radius:16px;
+  background:#e3f0f7;color:var(--teal);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.service h3{font-size:1.18rem;color:var(--navy);margin-bottom:12px;line-height:1.35}
+.service ul{list-style:none;margin-top:2px}
+.service li{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:6px 0;font-size:1rem;
+}
+.service li svg{color:var(--teal);flex:0 0 auto;margin-top:5px}
+.services-note{text-align:center;margin-top:34px;font-size:1.05rem;color:var(--navy);font-weight:600}
+
+/* Déroulement */
+.etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;counter-reset:etape}
+.etape{
+  position:relative;background:var(--fond-carte);border:1px solid var(--bord);
+  border-radius:18px;padding:30px 26px 26px;box-shadow:var(--ombre);
+}
+.etape::before{
+  counter-increment:etape;content:counter(etape);
+  position:absolute;top:-22px;left:26px;
+  width:46px;height:46px;border-radius:50%;
+  background:var(--navy);color:#fff;
+  font-weight:800;font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 10px rgba(20,70,105,.25);
+}
+.etape:nth-child(2)::before{background:var(--teal)}
+.etape:nth-child(3)::before{background:var(--slate)}
+.etape h3{font-size:1.18rem;color:var(--navy);margin:8px 0 10px}
+.etape p{font-size:1rem}
+.etapes-note{
+  text-align:center;margin-top:44px;font-size:1.06rem;
+  background:#fff;border:1px dashed var(--teal);border-radius:14px;
+  padding:18px 22px;color:var(--navy);font-weight:600;max-width:760px;
+  margin-left:auto;margin-right:auto;
+}
+
+/* Tarifs */
+.tarifs{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px;align-items:stretch}
+.tarif{
+  background:var(--fond-carte);border:1px solid var(--bord);border-radius:18px;
+  padding:30px 28px;box-shadow:var(--ombre);display:flex;flex-direction:column;
+}
+.tarif .nom{font-size:1.2rem;font-weight:800;color:var(--navy)}
+.tarif .duree{
+  display:inline-block;font-size:.92rem;font-weight:700;color:var(--teal);
+  margin:6px 0 16px;
+}
+.tarif .prix{font-size:2.4rem;font-weight:800;color:var(--navy);line-height:1.1}
+.tarif .apres{
+  font-size:1.02rem;font-weight:700;color:var(--teal-dark);margin:6px 0 16px;
+}
+.tarif .desc{font-size:1rem;flex:1}
+.tarif .pack{
+  margin-top:18px;background:var(--fond-clair);border-radius:12px;
+  padding:12px 16px;font-size:.98rem;font-weight:600;color:var(--navy);
+}
+.tarif.gratuit{border:3px solid var(--jaune)}
+.tarif.gratuit .badge{
+  align-self:flex-start;background:var(--jaune);color:var(--navy);
+  font-weight:800;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;
+  padding:5px 12px;border-radius:999px;margin-bottom:12px;
+}
+.mention-fiscale{
+  max-width:760px;margin:34px auto 0;text-align:center;
+  font-size:.92rem;color:#4a5b68;
+}
+.zone-bandeau{
+  display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin:38px auto 0;max-width:760px;
+  background:#fff;border:1px solid var(--bord);border-radius:14px;box-shadow:var(--ombre);
+  padding:18px 22px;font-weight:700;color:var(--navy);font-size:1.05rem;
+}
+.zone-bandeau svg{color:var(--teal)}
+
+/* FAQ */
+details.faq{
+  background:var(--fond-carte);border:1px solid var(--bord);border-radius:16px;
+  margin-bottom:16px;box-shadow:var(--ombre);overflow:hidden;
+}
+details.faq summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:16px;
+  min-height:60px;padding:18px 64px 18px 22px;
+  font-weight:700;font-size:1.06rem;color:var(--navy);position:relative;
+}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{
+  content:"+";position:absolute;right:22px;top:50%;transform:translateY(-50%);
+  font-size:1.9rem;font-weight:600;color:var(--teal);line-height:1;
+}
+details.faq[open] summary::after{content:"–"}
+details.faq summary:hover{background:var(--fond-clair)}
+details.faq .reponse{padding:0 22px 20px;font-size:1.02rem;max-width:72ch}
+details.faq .reponse p + p{margin-top:10px}
+
+/* Contact */
+.contact-carte{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--slate) 100%);
+  border-radius:24px;color:#fff;padding:52px 40px;text-align:center;
+  box-shadow:0 14px 34px rgba(20,70,105,.28);
+}
+.contact-carte h2{font-size:clamp(1.5rem,1.2rem + 1.5vw,2.1rem);font-weight:800;margin-bottom:14px}
+.contact-carte > p{max-width:640px;margin:0 auto 30px;font-size:1.1rem;color:#e8f1f7}
+.contact-carte .bouton{margin-bottom:26px}
+.contact-lignes{
+  display:flex;flex-direction:column;gap:10px;align-items:center;
+  font-size:1.05rem;
+}
+.contact-lignes a{color:#fff;font-weight:700}
+.contact-lignes a:hover{color:var(--jaune)}
+.contact-lignes .ligne{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.contact-lignes svg{color:var(--jaune)}
+.contact-reassurance{margin-top:26px;font-size:.98rem;color:#c9d9e5;font-style:italic}
+
+/* ══════════ PIED DE PAGE ══════════ */
+footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
+.footer-inner{display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between}
+.footer-brand{display:flex;align-items:center;gap:14px}
+.footer-brand img{width:120px}
+.footer-brand strong{display:block;font-size:1.05rem}
+.footer-brand small{color:#c9d9e5}
+.footer-coords{font-size:.98rem;line-height:1.8}
+.footer-coords a{color:#fff;font-weight:700}
+.footer-coords a:hover{color:var(--jaune)}
+.footer-legal{
+  border-top:1px solid rgba(255,255,255,.22);margin-top:30px;padding-top:20px;
+  font-size:.88rem;color:#c9d9e5;line-height:1.6;
+}
+.retour-haut{
+  display:inline-block;margin-top:14px;color:#fff;font-weight:700;
+  text-decoration:none;border:2px solid rgba(255,255,255,.4);
+  padding:10px 18px;border-radius:12px;
+}
+.retour-haut:hover{border-color:var(--jaune);color:var(--jaune)}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero{padding:44px 0 52px}
+}
+@media (max-width:760px){
+  .header-inner{justify-content:center;text-align:center}
+  nav.principale{margin-left:0;justify-content:center}
+  .brand{flex-direction:column;gap:8px}
+  section{padding:56px 0}
+}
+@media (max-width:520px){
+  body{font-size:17px}
+  .container{padding:0 18px}
+  .hero-actions .bouton{width:100%}
+  .contact-carte{padding:40px 22px}
+  .bouton{font-size:1.05rem;padding:12px 20px}
+  .tarif .prix{font-size:2.1rem}
+  details.faq summary{font-size:1rem}
+}
+</style>
 </head>
 <body>
 
-    <div class="cadre-arrondi">
-        <h1>Bienvenue sur ma page !</h1>
-        <p>Fini les galères de blocage ! Ici, le code source est 100 % libre, le cadre est parfaitement arrondi et le texte bleu clair s'affiche avec une fluidité totale.</p>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<!-- ═══════════ EN-TÊTE ═══════════ -->
+<header class="site">
+  <div class="container header-inner">
+    <div class="brand">
+      <img src="EKN_Logo.png" alt="Logo EsKal Numérique" width="150" height="81">
+      <div class="titre">
+        <!-- <strong>EsKal Numérique</strong> -->
+        <span>Accompagnement à domicile Dordogne</span>
+      </div>
     </div>
+    <nav class="principale" aria-label="Menu principal">
+      <a href="#approche">L’approche</a>
+      <a href="#seances">Les séances</a>
+      <a href="#deroulement">Déroulement</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+<!-- ═══════════ BANDEAU D'ACCUEIL ═══════════ -->
+<section class="hero" aria-label="Présentation">
+  <div class="container hero-grid">
+    <div>
+      <p class="surtitre">Accompagnement informatique à domicile · Bergerac et environs (Lembras, Creysse, Mouleydier, Saint-Sauveur...)</p>
+      <h1>Reprenez la main sur vos outils <mark>numériques</mark>, à votre rythme</h1>
+      <p class="accroche">
+        Ordinateur, tablette, smartphone, Internet… <strong>Kal vous apprend à vous en
+        servir simplement, chez vous</strong>, sans stress et sans jargon. Ici, aucune question
+        n’est « bête », personne ne vous presse&nbsp;: on prend le temps de voir, de
+        comprendre, puis de refaire — jusqu’à ce que ça devienne évident…
+        et que ça devienne <strong>vôtre</strong>.
+      </p>
+      <div class="hero-actions">
+        <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 1/3 ▼ -->
+        <a class="bouton bouton-plein" href="tel:+337XXXXXXXX">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          07 XX XX XX XX
+        </a>
+        <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 1/3 ▲ -->
+        <a class="bouton bouton-contour" href="#deroulement">Comment ça se passe&nbsp;?</a>
+      </div>
+      <p class="hero-note">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        Premier bilan gratuit, à votre domicile, sans engagement
+      </p>
+    </div>
+
+    <aside class="coup-oeil" aria-label="En un coup d’œil">
+      <h2>En un coup d’œil</h2>
+      <ul>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          À votre domicile, secteur de Bergerac
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          À votre rythme, sans stress
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Aucune connaissance nécessaire
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Patience et pédagogie adaptées
+        </li>
+        <li>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Première rencontre gratuite
+        </li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ═══════════ L'APPROCHE ═══════════ -->
+<section id="approche" class="fond">
+  <div class="container">
+    <div class="section-titre">
+      <h2>Vous n’avez pas à être « doué »&nbsp;: vous avez juste besoin qu’on vous explique</h2>
+      <div class="barre" aria-hidden="true"></div>
+    </div>
+    <p class="approche-intro">
+      Personne ne naît avec un smartphone dans les mains. Si l’informatique vous semble
+      compliquée, <strong>ce n’est pas votre faute</strong>&nbsp;: c’est simplement qu’on ne
+      vous l’a jamais expliquée calmement, en prenant le temps. Mon rôle est de
+      <strong>démystifier tout ça</strong>&nbsp;:
+      comprendre ce que vous voyez à l’écran, savoir ce que vous avez à faire, et ne
+      plus jamais vous sentir perdu·e face à un écran.
+    </p>
+    <div class="grille-3">
+      <article class="carte">
+        <div class="icone" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </div>
+        <h3>Votre rythme, rien d’autre</h3>
+        <p>Chaque séance avance à votre rythme.&nbsp;: rien n’est chronométré, rien ne presse. Vous pouvez
+        prendre le temps de voir et de comprendre.</p>
+      </article>
+      <article class="carte">
+        <div class="icone" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5.2-10-10C1 7.5 3.6 4.5 7 4.5c2.2 0 4 1.3 5 3 1-1.7 2.8-3 5-3 3.4 0 6 3 5 6.5-2 4.8-10 10-10 10z"/></svg>
+        </div>
+        <h3>Sans jugement, sans jargon</h3>
+        <p>Les mots compliqués sont traduits en langage clair. Si quelque chose n’est
+        pas compris, c’est qu’il n’a pas encore été bien expliqué — jamais que vous
+        n’êtes « nul·le ». Toutes les questions sont les bienvenues.</p>
+      </article>
+      <article class="carte">
+        <div class="icone" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>C’est vous qui reprenez la main</h3>
+        <p>Guidé·e pas à pas, c’est vous qui tenez la souris ou l’écran.
+        Je montre, j’explique, puis vous faites. Le but&nbsp;: que vous n’ayez plus
+        besoin de moi… et que vous soyez fier·e d’y être arrivé·e.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LES SÉANCES ═══════════ -->
+<section id="seances">
+  <div class="container">
+    <div class="section-titre">
+      <h2>Ce que nous pouvons apprendre ensemble</h2>
+      <div class="barre" aria-hidden="true"></div>
+      <p>Des exemples concrets — mais ce sont vos envies qui guident chaque séance.
+      Apportez vos questions, même si elles ne figurent pas dans cette liste.</p>
+    </div>
+
+    <div class="grille-services">
+      <article class="service">
+        <div class="icone" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Devenir autonome avec votre ordinateur, votre tablette ou votre smartphone</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Les premiers pas&nbsp;: allumer, naviguer, ne plus avoir peur de « casser » quelque chose</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Ranger et retrouver photos, messages et documents</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Wi-Fi, réglages et mises à jour démystifiés</li>
+        </ul>
+      </article>
+
+      <article class="service">
+        <div class="icone" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>Naviguer sur Internet sans stress et en toute sécurité</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Trouver ce que l’on cherche sans se perdre</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Créer et retenir des mots de passe solides, sans casse-tête</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Repérer arnaques, spam et fausses alertes pour s’en protéger</li>
+        </ul>
+      </article>
+
+      <article class="service">
+        <div class="icone" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        </div>
+        <h3>Réaliser vos démarches en ligne</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Impôts, Ameli, CAF, France Identité… accompagné·e pas à pas</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Remplir un formulaire, prendre un rendez-vous</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Enregistrer, imprimer ou retrouver un justificatif</li>
+        </ul>
+      </article>
+
+      <article class="service">
+        <div class="icone" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Garder le lien avec vos proches</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Appels et visio&nbsp;: WhatsApp, FaceTime, Messenger… simplement</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Envoyer et recevoir des photos de la famille</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> E-mails et messageries utilisés en confiance</li>
+        </ul>
+      </article>
+    </div>
+
+    <p class="services-note">Une envie, un besoin, une appréhension particulière&nbsp;? Parlons-en&nbsp;: rien n’est imposé.</p>
+  </div>
+</section>
+
+<!-- ═══════════ DÉROULEMENT ═══════════ -->
+<section id="deroulement" class="fond">
+  <div class="container">
+    <div class="section-titre">
+      <h2>Comment ça se passe&nbsp;?</h2>
+      <div class="barre" aria-hidden="true"></div>
+      <p>Simplement, tranquillement, et toujours chez vous.</p>
+    </div>
+
+    <div class="etapes">
+      <article class="etape">
+        <h3>Le bilan gratuit</h3>
+        <p>À votre domicile, nous faisons connaissance. Je vérifie que votre matériel ne vous limitera pas. Vous me dites vos besoins, vos
+        envies et ce qui vous inquiète. Sans engagement aucun&nbsp;: à la fin, vous
+        décidez si vous souhaitez continuer.</p>
+      </article>
+      <article class="etape">
+        <h3>Un objectif à la fois</h3>
+        <p>Ensemble, nous choisissons ce que vous voulez apprendre en priorité&nbsp;:
+        envoyer une photo à un petit-enfant, faire vos papiers en ligne, appeler
+        votre famille… Une chose à la fois, clairement.</p>
+      </article>
+      <article class="etape">
+        <h3>Des séances sereines</h3>
+        <p>Je montre et j’explique, puis c’est vous qui faites, guidé·e pas à pas. On
+        répète autant de fois qu’il faut. Entre les séances, notez vos questions&nbsp;:
+        nous y répondrons ensemble à la suivante.</p>
+      </article>
+    </div>
+
+    <p class="etapes-note">
+      Le rythme des séances&nbsp;? C’est vous qui le décidez&nbsp;: chaque semaine, chaque
+      mois, ou simplement quand vous en ressentez le besoin.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ TARIFS ═══════════ -->
+<section id="tarifs">
+  <div class="container">
+    <div class="section-titre">
+      <h2>Des tarifs simples et clairs</h2>
+      <div class="barre" aria-hidden="true"></div>
+      <p>50&nbsp;% du montant vous est remboursé sous forme de crédit d’impôt*.
+      Concrètement, une séance Sérénité vous coûte 12&nbsp;€.</p>
+    </div>
+
+    <div class="tarifs">
+      <article class="tarif gratuit">
+        <p class="badge">Première rencontre</p>
+        <p class="nom">Bilan gratuit</p>
+        <p class="duree">Chez vous · environ 30 minutes</p>
+        <p class="prix">0&nbsp;€</p>
+        <p class="desc">Nous faisons connaissance, nous parlons de vos besoins et de vos
+        envies. Vous repartez avec une réponse claire — sans aucun engagement.</p>
+      </article>
+
+      <article class="tarif">
+        <p class="nom">Séance Sérénité</p>
+        <p class="duree">45 minutes</p>
+        <p class="prix">24&nbsp;€</p>
+        <p class="apres">soit 12&nbsp;€ après crédit d’impôt*</p>
+        <p class="desc">Le format idéal pour avancer pas à pas, à son rythme, sans
+        fatigue. Idéale pour reprendre confiance.</p>
+        <p class="pack">Pack de 10 séances&nbsp;: 220&nbsp;€ (110&nbsp;€ après crédit d’impôt*)</p>
+      </article>
+
+      <article class="tarif">
+        <p class="nom">Séance Exploration</p>
+        <p class="duree">Jusqu’à 1&nbsp;h&nbsp;30</p>
+        <p class="prix">42&nbsp;€</p>
+        <p class="apres">soit 21&nbsp;€ après crédit d’impôt*</p>
+        <p class="desc">Pour aller plus loin d’un seul tenant&nbsp;: une démarche complète,
+        un nouvel apprentissage approfondi.</p>
+        <p class="pack">Pack de 5 séances&nbsp;: 200&nbsp;€ (100&nbsp;€ après crédit d’impôt*)</p>
+      </article>
+    </div>
+
+    <p class="zone-bandeau">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      À votre domicile — secteur de Bergerac et communes proches
+    </p>
+
+    <p class="mention-fiscale">
+      * Selon les conditions de l’article 199 sexdecies du CGI (crédit d’impôt de
+      50&nbsp;%). Je vous explique simplement comment en bénéficier lors du bilan gratuit.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq" class="fond">
+  <div class="container">
+    <div class="section-titre">
+      <h2>Les questions qu’on me pose souvent</h2>
+      <div class="barre" aria-hidden="true"></div>
+    </div>
+
+    <details class="faq" open>
+      <summary>Je n’ai jamais touché à un ordinateur. Je peux encore apprendre&nbsp;?</summary>
+      <div class="reponse">
+        <p>Bien sûr, c’est le meilleur moment pour commencer&nbsp;: il n’y a
+        aucune habitude à « désapprendre ». Aucune connaissance n’est nécessaire. Nous
+        partons de zéro si besoin&nbsp;: allumer l’appareil, se servir de la souris,
+        reconnaître ce qu’on voit à l’écran.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Et si je bloque, ou si j’oublie d’une séance à l’autre&nbsp;?</summary>
+      <div class="reponse">
+        <p>C’est tout à fait normal — tout le monde oublie&nbsp;! On reprend calmement, on
+        répète, sans aucun reproche. Et je vous laisse des repères écrits simples pour
+        vous en souvenir entre deux séances.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Vais-je me sentir dépassé·e pendant les séances&nbsp;?</summary>
+      <div class="reponse">
+        <p>Non. Chaque séance se fait à votre rythme, avec des mots simples. Vous ne
+        serez jamais pressé·e. Si quelque chose n’est pas clair, c’est qu’il faut
+        l’expliquer autrement — et c’est mon travail, pas votre difficulté.</p>
+      </div>
+    </details>
+
+    <details class="faq">
+      <summary>Comment fonctionne le crédit d’impôt de 50&nbsp;%&nbsp;?</summary>
+      <div class="reponse">
+        <p>Vous payez la séance tarif normal, puis 50&nbsp;% du montant vous est rendu
+        sur vos impôts, dans les conditions de l’article 199 sexdecies du CGI. La
+        démarche est simple et je pourrai vous guider lors de la première séance.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-carte">
+      <h2>Un appel vaut mieux qu’un long discours</h2>
+      <p>Le plus simple&nbsp;? Appelez-moi. Nous prendrons cinq minutes pour faire
+      connaissance et, si vous le souhaitez, nous fixerons un bilan gratuit à votre
+      domicile. Vous pouvez aussi me laisser un message&nbsp;: je vous rappelle.</p>
+	  <p style="margin-top: 14px; font-weight: 600; color: #f0e038;">
+        Vous cherchez un accompagnement patient pour l’un de vos parents&nbsp;? Contactez-moi pour en discuter.
+      </p>
+
+      <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 2/3 ▼ -->
+      <a class="bouton bouton-blanc" href="tel:+337XXXXXXXX">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Appeler Kal&nbsp;: 07 XX XX XX XX
+      </a>
+      <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 2/3 ▲ -->
+
+      <div class="contact-lignes">
+        <p class="ligne">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          <a href="mailto:eskal.numerique@gmail.com">eskal.numerique@gmail.com</a>
+        </p>
+        <p class="ligne">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          À domicile — secteur de Bergerac et communes proches
+        </p>
+      </div>
+
+      <p class="contact-reassurance">Vous préférez être accompagné·e pour appeler&nbsp;?
+      Demandez à un proche de composer le numéro avec vous&nbsp;: c’est avec plaisir que
+      je répondrai à tous les deux.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════ PIED DE PAGE ═══════════ -->
+<footer class="site">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="EKN_Logo.png" alt="Logo EsKal Numérique" width="120" height="65">
+        <div>
+          <strong>EsKal Numérique <abbr title="Entreprise individuelle">EI</abbr></strong>
+          <small>Accompagnement informatique à domicile</small>
+        </div>
+      </div>
+      <div class="footer-coords">
+        <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 3/3 ▼ -->
+        <p>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+337XXXXXXXX">07 XX XX XX XX</a>
+        </p>
+        <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 3/3 ▲ -->
+        <p>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          <a href="mailto:eskal.numerique@gmail.com">eskal.numerique@gmail.com</a>
+        </p>
+        <p>Siret&nbsp;: XXXXXXXXXXXXXX</p>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>* Tarifs assortis d’un crédit d’impôt de 50&nbsp;% selon les conditions de
+      l’article 199 sexdecies du CGI. © 2026 EsKal Numérique EI — Tous droits réservés.</p>
+      <a class="retour-haut" href="#contenu">↑ Revenir en haut de la page</a>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
