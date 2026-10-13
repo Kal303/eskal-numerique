@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- ════════════════════════════════════════════════════════════════════════
-     EsKal Numérique — site vitrine (fichier unique, aucune dépendance locale)
-     ──────────────────────────────────────────────────────────────────────────
-     ▶ POUR METTRE LE VRAI NUMÉRO DE TÉLÉPHONE :
-       recherche « 07 XX XX XX XX » — la recherche en trouve 4, dont une
-       dans ce commentaire. Les 3 vrais endroits sont :
-         1) le bouton d'appel du bandeau d'accueil (en haut de page)
-         2) le grand bouton d'appel de la section Contact
-         3) le pied de page
-       Modifie aussi les liens href="tel:+337XXXXXXXX" (au même endroit
-       que chaque numéro affiché).
-       Format international : 07 61 23 45 67  →  tel:+33761234567
-      ▶ ajoute le logo SAP et autres trucs importants quand tu auras la valid Nova
-
-     ════════════════════════════════════════════════════════════════════════ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EsKal Numérique — Aide à l’autonomie numérique à domicile · Bergerac</title>
@@ -30,11 +15,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
 <style>
-/* ─── Palette issue du logo (éclaircie pour la lisibilité) ───
-   navy   #144669  → titres, textes forts
-   teal   #016f97  → accents, liens
-   slate  #2f5169  → bandeau pied de page (comme le flyer)
-   jaune  #f0e038  → touches de surlignage                    */
 :root{
   --navy:#144669;
   --navy-dark:#0e3450;
@@ -51,11 +31,7 @@
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-/* ▼ DÉCALAGE POUR NAVIGATEUR (Évite le chevauchement sous le menu fixe) ▼ */
-section[id] {
-  scroll-margin-top: 42px;
-}
-/* ▲ DÉCALAGE POUR NAVIGATEUR ▲ */
+section[id] {scroll-margin-top: 42px;}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *{transition:none !important;animation:none !important}
@@ -70,7 +46,6 @@ body{
   -webkit-text-size-adjust:100%;
 }
 
-/* Ligne d'entête tricolore (navy / teal / jaune) */
 body::before{
   content:"";display:block;height:7px;
   background:linear-gradient(to right,var(--navy) 0 42%,var(--teal) 42% 76%,var(--jaune) 76% 100%);
@@ -89,7 +64,7 @@ a:hover{color:var(--teal-dark)}
 }
 .skip:focus{left:0}
 
-/* ══════════ EN-TÊTE ══════════ */
+/* EN-TÊTE */
 header.site{
   position:sticky;top:0;z-index:50;
   background:rgba(255,255,255,.97);
@@ -116,7 +91,7 @@ nav.principale a{
 }
 nav.principale a:hover{background:var(--fond-clair);color:var(--teal-dark)}
 
-/* ══════════ BOUTONS ══════════ */
+/* BOUTONS */
 .bouton{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   min-height:56px;padding:12px 26px;border-radius:14px;
@@ -132,7 +107,7 @@ nav.principale a:hover{background:var(--fond-clair);color:var(--teal-dark)}
 .bouton-contour{border:3px solid var(--navy);color:var(--navy);background:transparent}
 .bouton-contour:hover{background:var(--navy);color:#fff}
 
-/* ══════════ BANDEAU D'ACCUEIL ══════════ */
+/* BANDEAU D'ACCUEIL */
 .hero{background:linear-gradient(180deg,#ffffff 0%,var(--fond-clair) 100%);padding:56px 0 64px}
 .hero-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:44px;align-items:center}
 .surtitre{
@@ -153,7 +128,6 @@ mark{
 .hero-note{font-size:1.02rem;color:var(--teal-dark);font-weight:600;display:flex;align-items:center;gap:8px}
 .hero-note svg{color:var(--jaune);flex:0 0 auto}
 
-/* Carte « en un coup d'œil » */
 .coup-oeil{
   background:var(--fond-carte);border:1px solid var(--bord);border-radius:20px;
   box-shadow:var(--ombre);padding:30px 30px 26px;
@@ -168,7 +142,7 @@ mark{
 .coup-oeil li:last-child{border-bottom:none}
 .coup-oeil li svg{color:var(--teal);flex:0 0 auto;margin-top:4px}
 
-/* ══════════ SECTIONS ══════════ */
+/* SECTIONS */
 section{padding:72px 0}
 section.fond{background:var(--fond-clair)}
 .section-titre{text-align:center;max-width:760px;margin:0 auto 48px}
@@ -182,7 +156,6 @@ section.fond{background:var(--fond-clair)}
 }
 .section-titre p{font-size:1.08rem}
 
-/* Approche */
 .approche-intro{max-width:780px;margin:0 auto 40px;font-size:1.12rem;text-align:center}
 .approche-intro strong{color:var(--navy)}
 .grille-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
@@ -198,7 +171,6 @@ section.fond{background:var(--fond-clair)}
 .carte h3{font-size:1.22rem;color:var(--navy);margin-bottom:10px}
 .carte p{font-size:1.02rem}
 
-/* Services */
 .grille-services{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px}
 .service{
   background:var(--fond-carte);border:1px solid var(--bord);border-radius:18px;
@@ -218,7 +190,6 @@ section.fond{background:var(--fond-clair)}
 .service li svg{color:var(--teal);flex:0 0 auto;margin-top:5px}
 .services-note{text-align:center;margin-top:34px;font-size:1.05rem;color:var(--navy);font-weight:600}
 
-/* Déroulement */
 .etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;counter-reset:etape}
 .etape{
   position:relative;background:var(--fond-carte);border:1px solid var(--bord);
@@ -244,7 +215,6 @@ section.fond{background:var(--fond-clair)}
   margin-left:auto;margin-right:auto;
 }
 
-/* Tarifs */
 .tarifs{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px;align-items:stretch}
 .tarif{
   background:var(--fond-carte);border:1px solid var(--bord);border-radius:18px;
@@ -282,7 +252,6 @@ section.fond{background:var(--fond-clair)}
 }
 .zone-bandeau svg{color:var(--teal)}
 
-/* FAQ */
 details.faq{
   background:var(--fond-carte);border:1px solid var(--bord);border-radius:16px;
   margin-bottom:16px;box-shadow:var(--ombre);overflow:hidden;
@@ -303,7 +272,6 @@ details.faq summary:hover{background:var(--fond-clair)}
 details.faq .reponse{padding:0 22px 20px;font-size:1.02rem;max-width:72ch}
 details.faq .reponse p + p{margin-top:10px}
 
-/* Contact */
 .contact-carte{
   background:linear-gradient(135deg,var(--navy) 0%,var(--slate) 100%);
   border-radius:24px;color:#fff;padding:52px 40px;text-align:center;
@@ -322,7 +290,7 @@ details.faq .reponse p + p{margin-top:10px}
 .contact-lignes svg{color:var(--jaune)}
 .contact-reassurance{margin-top:26px;font-size:.98rem;color:#c9d9e5;font-style:italic}
 
-/* ══════════ PIED DE PAGE ══════════ */
+/* PIED DE PAGE */
 footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 .footer-inner{display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between}
 .footer-brand{display:flex;align-items:center;gap:14px}
@@ -332,6 +300,14 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 .footer-coords{font-size:.98rem;line-height:1.8}
 .footer-coords a{color:#fff;font-weight:700}
 .footer-coords a:hover{color:var(--jaune)}
+.footer-sap{
+  display:flex;align-items:center;gap:16px;
+  background:rgba(255,255,255,0.08);padding:14px 18px;border-radius:12px;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.footer-sap img{width:80px;height:auto;display:block}
+.footer-sap p{font-size:.9rem;color:#e8f1f7;line-height:1.4}
+.footer-sap a.sap-lien{color:var(--jaune);text-decoration:underline}
 .footer-legal{
   border-top:1px solid rgba(255,255,255,.22);margin-top:30px;padding-top:20px;
   font-size:.88rem;color:#c9d9e5;line-height:1.6;
@@ -343,10 +319,10 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 }
 .retour-haut:hover{border-color:var(--jaune);color:var(--jaune)}
 
-/* ══════════ RESPONSIVE ══════════ */
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .hero{padding:44px 0 52px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
 }
 @media (max-width:760px){
   .header-inner{justify-content:center;text-align:center}
@@ -369,13 +345,12 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 
 <a class="skip" href="#contenu">Aller au contenu</a>
 
-<!-- ═══════════ EN-TÊTE ═══════════ -->
+<!-- EN-TÊTE -->
 <header class="site">
   <div class="container header-inner">
     <div class="brand">
       <img src="EKN_Logo.png" alt="Logo EsKal Numérique" width="150" height="81">
       <div class="titre">
-        <!-- <strong>EsKal Numérique</strong> -->
         <span>Accompagnement à domicile Dordogne</span>
       </div>
     </div>
@@ -391,11 +366,11 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 
 <main id="contenu">
 
-<!-- ═══════════ BANDEAU D'ACCUEIL ═══════════ -->
+<!-- BANDEAU D'ACCUEIL -->
 <section class="hero" aria-label="Présentation">
   <div class="container hero-grid">
     <div>
-      <p class="surtitre">Accompagnement informatique à domicile · Bergerac et environs (Lembras, Creysse, Mouleydier, Saint-Sauveur...)</p>
+      <p class="surtitre">Accompagnement informatique à domicile · Bergerac (Lembras, Creysse, Cours-de-Pile et communes limitrophes)</p>
       <h1>Reprenez la main sur vos outils <mark>numériques</mark>, à votre rythme</h1>
       <p class="accroche">
         Ordinateur, tablette, smartphone, Internet… <strong>Kal vous apprend à vous en
@@ -405,12 +380,10 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
         et que ça devienne <strong>vôtre</strong>.
       </p>
       <div class="hero-actions">
-        <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 1/3 ▼ -->
-        <a class="bouton bouton-plein" href="tel:+337XXXXXXXX">
+        <a class="bouton bouton-plein" href="tel:+33749211699">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          07 XX XX XX XX
+          07 49 21 16 99
         </a>
-        <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 1/3 ▲ -->
         <a class="bouton bouton-contour" href="#deroulement">Comment ça se passe&nbsp;?</a>
       </div>
       <p class="hero-note">
@@ -447,7 +420,7 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
   </div>
 </section>
 
-<!-- ═══════════ L'APPROCHE ═══════════ -->
+<!-- L'APPROCHE -->
 <section id="approche" class="fond">
   <div class="container">
     <div class="section-titre">
@@ -493,7 +466,7 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
   </div>
 </section>
 
-<!-- ═══════════ LES SÉANCES ═══════════ -->
+<!-- LES SÉANCES -->
 <section id="seances">
   <div class="container">
     <div class="section-titre">
@@ -557,7 +530,7 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
   </div>
 </section>
 
-<!-- ═══════════ DÉROULEMENT ═══════════ -->
+<!-- DÉROULEMENT -->
 <section id="deroulement" class="fond">
   <div class="container">
     <div class="section-titre">
@@ -594,7 +567,7 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
   </div>
 </section>
 
-<!-- ═══════════ TARIFS ═══════════ -->
+<!-- TARIFS -->
 <section id="tarifs">
   <div class="container">
     <div class="section-titre">
@@ -635,19 +608,20 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
       </article>
     </div>
 
-    <p class="zone-bandeau">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      À votre domicile — secteur de Bergerac et communes proches
-    </p>
+    <a href="https://share.google/VHi8GOx0wgdc8BPiE" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+      <p class="zone-bandeau" style="transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        À votre domicile — secteur de Bergerac et communes proches (cliquez pour voir la zone)
+      </p>
+    </a>
 
     <p class="mention-fiscale">
-      * Selon les conditions de l’article 199 sexdecies du CGI (crédit d’impôt de
-      50&nbsp;%). Je vous explique simplement comment en bénéficier lors du bilan gratuit.
+      * Selon les conditions de l’article 199 sexdecies du CGI (crédit d’impôt de 50&nbsp;% dans la limite d’un plafond de 500&nbsp;€ par an et par foyer fiscal pour l'assistance informatique). Je vous explique simplement comment en bénéficier lors du bilan gratuit.
     </p>
   </div>
 </section>
 
-<!-- ═══════════ FAQ ═══════════ -->
+<!-- FAQ -->
 <section id="faq" class="fond">
   <div class="container">
     <div class="section-titre">
@@ -687,14 +661,14 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
       <summary>Comment fonctionne le crédit d’impôt de 50&nbsp;%&nbsp;?</summary>
       <div class="reponse">
         <p>Vous payez la séance tarif normal, puis 50&nbsp;% du montant vous est rendu
-        sur vos impôts, dans les conditions de l’article 199 sexdecies du CGI. La
+        sur vos impôts (dans la limite du plafond légal de 500&nbsp;€/an pour l'informatique), dans les conditions de l’article 199 sexdecies du CGI. La
         démarche est simple et je pourrai vous guider lors de la première séance.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ═══════════ CONTACT ═══════════ -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <div class="contact-carte">
@@ -706,12 +680,10 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
         Vous cherchez un accompagnement patient pour l’un de vos parents&nbsp;? Contactez-moi pour en discuter.
       </p>
 
-      <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 2/3 ▼ -->
-      <a class="bouton bouton-blanc" href="tel:+337XXXXXXXX">
+      <a class="bouton bouton-blanc" href="tel:+33749211699">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Appeler Kal&nbsp;: 07 XX XX XX XX
+        Appeler Kal&nbsp;: 07 49 21 16 99
       </a>
-      <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 2/3 ▲ -->
 
       <div class="contact-lignes">
         <p class="ligne">
@@ -733,7 +705,7 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
 
 </main>
 
-<!-- ═══════════ PIED DE PAGE ═══════════ -->
+<!-- PIED DE PAGE -->
 <footer class="site">
   <div class="container">
     <div class="footer-inner">
@@ -744,23 +716,38 @@ footer.site{background:var(--slate);color:#fff;padding:44px 0 34px}
           <small>Accompagnement informatique à domicile</small>
         </div>
       </div>
+      
+      <!-- LOGO SAP CLIQUABLE (TRACEUR WEB OFFICIEL) -->
+      <div class="footer-sap">
+        <a href="https://www.servicesalapersonne.gouv.fr" target="_blank" rel="noopener noreferrer" title="En savoir plus sur les Services à la Personne">
+          <img src="Traceur_SAP_web_rvb.jpg" alt="Logo officiel Services à la Personne" width="80" height="40">
+        </a>
+        <p>
+          Organisme déclaré <strong>Services à la Personne</strong><br>
+          N° de déclaration SAP : <strong>109108753</strong><br>
+          <a class="sap-lien" href="https://www.servicesalapersonne.gouv.fr" target="_blank" rel="noopener noreferrer">Site officiel des SAP</a>
+        </p>
+      </div>
+
       <div class="footer-coords">
-        <!-- ▼ NUMÉRO DE TÉLÉPHONE — endroit 3/3 ▼ -->
         <p>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:+337XXXXXXXX">07 XX XX XX XX</a>
+          <a href="tel:+33749211699">07 49 21 16 99</a>
         </p>
-        <!-- ▲ NUMÉRO DE TÉLÉPHONE — endroit 3/3 ▲ -->
         <p>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
           <a href="mailto:eskal.numerique@gmail.com">eskal.numerique@gmail.com</a>
         </p>
-        <p>Siret&nbsp;: XXXXXXXXXXXXXX</p>
+        <p>Siret&nbsp;: 10910875300012</p>
       </div>
     </div>
+    
     <div class="footer-legal">
       <p>* Tarifs assortis d’un crédit d’impôt de 50&nbsp;% selon les conditions de
-      l’article 199 sexdecies du CGI. © 2026 EsKal Numérique EI — Tous droits réservés.</p>
+      l’article 199 sexdecies du CGI (dans la limite du plafond de 500&nbsp;€/an pour l'assistance informatique). © 2026 EsKal Numérique - Entrepreneur Individuel — Tous droits réservés.</p>
+      <p style="margin-top: 8px;">
+        <a href="RGPD_EKN.pdf" target="_blank" rel="noopener noreferrer">Mentions légales & Politique de confidentialité (RGPD) [PDF]</a>
+      </p>
       <a class="retour-haut" href="#contenu">↑ Revenir en haut de la page</a>
     </div>
   </div>
